@@ -1,0 +1,55 @@
+name: "Setup Python Poetry with Cache"
+description: "Setup Python & Poetry, using cache for dependencies and Poetry installation."
+branding:
+  icon: "play"
+  color: "purple"
+
+inputs:
+  python-version:
+    description: Python Version
+    required: true
+  poetry-version:
+    description: Poetry Version
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up python ${{ inputs.python-version }}
+      id: setup-python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    # Install Poetry
+    - name: Load cached Poetry Binary
+      id: cached-poetry-binary
+      uses: actions/cache@v3
+      with:
+        path: ~/.local
+        key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ inputs.poetry-version }}
+
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: ${{ inputs.poetry-version }}
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+
+    # Load cached venv if cache exists
+    - name: Load cached venv
+      id: cached-poetry-dependencies
+      uses: actions/cache@v3
+      with:
+        path: .venv
+        key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+        # If the exact match is not found, the cache will be restored from the key with the prefix.
+        # Note cache-hit returns false in this case, so the below step will run
+        restore-keys: |
+          venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-
+
+    # Install dependencies on cache miss
+    - name: Install dependencies
+      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      shell: sh
+      run: poetry install --no-interaction --no-root
