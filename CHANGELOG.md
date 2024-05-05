@@ -1,6 +1,6 @@
 # Setup Python Poetry with Cache GitHub Action Changelog
 
-## v2
+## v1.0.1
 
 - Update to use `actions/cache@v4`
 
