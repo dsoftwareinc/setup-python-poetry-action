@@ -1,13 +1,11 @@
 # GitHub Action - Setup and Cache Python Poetry
 
-This action simplifies the setup and caching of Poetry,
-and provides the following functionality for GitHub Actions users:
+This GitHub action simplifies the setup and caching of Poetry dependencies for Python projects.
 
 When a job using this action runs for the first time, this action will download Poetry and the required project
 dependencies, then save it to the cache.
 
-For the following runs (whether it's on a different
-workflow/job [with the same cached commit](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#restrictions-for-accessing-a-cache))
+For the following runs (whether it's on a different workflow/job [with the same cached commit][1])
 this action will restore the cache, which is much faster than downloading everything again.
 
 ## Basic Usage
@@ -44,14 +42,23 @@ jobs:
 
 * You can see the list of cache entries by going to:
   `Repo` -> `Actions` tab -> `Caches` under `Managements` (left navbar, at the bottom).
-* [Don't forget the limitation of cache](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#usage-limits-and-eviction-policy).
+* [Don't forget the limitation of cache][2].
 
 ## Dependencies
 
-* Python setup using [`actions/setup-python`](https://github.com/actions/setup-python).
-* Poetry install using [`snok/install-poetry`](https://github.com/snok/install-poetry).
-* Poetry binary and dependency caching using [`actions/cache`](https://github.com/actions/cache).
+* Python setup using [`actions/setup-python`][3].
+* Poetry install using [`snok/install-poetry`][4].
+* Poetry binary and dependency caching using [`actions/cache`][5].
 
 ## License
 
-The scripts and documentation in this project are released under the [MIT License](LICENSE).
+The scripts and documentation in this project are released under the [MIT License][6].
+
+
+
+[1]:https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#restrictions-for-accessing-a-cache
+[2]:https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#usage-limits-and-eviction-policy
+[3]:https://github.com/actions/setup-python
+[4]:https://github.com/snok/install-poetry
+[5]:https://github.com/actions/cache
+[6]:LICENSE
