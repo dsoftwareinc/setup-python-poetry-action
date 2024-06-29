@@ -31,12 +31,21 @@ jobs:
         with:
           python-version: 3.11
           poetry-version: 1.7.1
+          poetry-install-additional-args: '-E flag' # Optional
 
       # Run what you want in the poetry environment
       - name: Run tests
         run: |
           poetry run python manage.py test
 ```
+
+## Input variables:
+
+| Name                             | Description                                       | Required | Default value |
+|----------------------------------|---------------------------------------------------|----------|---------------|
+| `python-version`                 | Python version to use.                            | Yes      | n/a           |
+| `poetry-version`                 | Poetry version to use.                            | Yes      | n/a           |
+| `poetry-install-additional-args` | Additional arguments to pass to `poetry install`. | No       | ""            |
 
 ## Notes
 
@@ -55,10 +64,14 @@ jobs:
 The scripts and documentation in this project are released under the [MIT License][6].
 
 
-
 [1]:https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#restrictions-for-accessing-a-cache
+
 [2]:https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#usage-limits-and-eviction-policy
+
 [3]:https://github.com/actions/setup-python
+
 [4]:https://github.com/snok/install-poetry
+
 [5]:https://github.com/actions/cache
+
 [6]:LICENSE

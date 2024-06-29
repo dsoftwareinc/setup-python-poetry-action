@@ -11,6 +11,10 @@ inputs:
   poetry-version:
     description: Poetry Version
     required: true
+  poetry-install-additional-args:
+    description: Additional arguments for poetry install (e.g., "-E flag")
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -52,4 +56,4 @@ runs:
     - name: Install dependencies
       if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
       shell: sh
-      run: poetry install --no-interaction --no-root
+      run: poetry install --no-interaction --no-root ${{ poetry-install-additional-args }}
